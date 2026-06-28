@@ -1,0 +1,108 @@
+<div class="app-shell">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="brand">
+        <span class="brand-icon">🎬</span>
+        <div>
+          <h1 class="brand-title">SF Film Map</h1>
+          <p class="brand-sub">San Francisco Filming Locations</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="search-section">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search movies, directors, actors…</mat-label>
+        <input
+          matInput
+          [matAutocomplete]="auto"
+          [value]="searchQuery()"
+          (input)="onSearchChange($any($event.target).value)"
+          (keyup.enter)="onSearch()"
+          placeholder="e.g. Vertigo, Hitchcock, Alcatraz"
+        />
+        <button
+          *ngIf="searchQuery()"
+          matSuffix
+          mat-icon-button
+          (click)="clearSearch()"
+          aria-label="Clear"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSuggestionSelected($event.option.value)">
+          <mat-option *ngFor="let s of suggestions()" [value]="s">{{ s }}</mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <button mat-flat-button class="search-btn" (click)="onSearch()">
+        <mat-icon>search</mat-icon>
+        Search
+      </button>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-bar">
+      <span class="stats-count">
+        <mat-icon class="stats-icon">movie</mat-icon>
+        {{ resultCount() }} location{{ resultCount() !== 1 ? 's' : '' }}
+      </span>
+      <span *ngIf="searchQuery()" class="stats-query">
+        for "<strong>{{ searchQuery() }}</strong>"
+      </span>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="isLoading()" class="loading-state">
+      <mat-spinner diameter="32" />
+      <span>Loading film locations…</span>
+    </div>
+
+    <!-- Selected location detail -->
+    <div *ngIf="selectedLocation() as loc" class="detail-panel">
+      <div class="detail-header">
+        <h2 class="detail-title">{{ loc.title }}</h2>
+        <button mat-icon-button class="close-btn" (click)="closePanel()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <span *ngIf="loc.releaseYear" class="detail-year">{{ loc.releaseYear }}</span>
+
+      <div class="detail-body">
+        <div *ngIf="loc.location" class="detail-row">
+          <mat-icon class="row-icon">place</mat-icon>
+          <span>{{ loc.location }}</span>
+        </div>
+        <div *ngIf="loc.director" class="detail-row">
+          <mat-icon class="row-icon">video_camera_front</mat-icon>
+          <span>{{ loc.director }}</span>
+        </div>
+        <!-- <div *ngIf="loc.actor1 || loc.actor2 || loc.actor3" class="detail-row">
+          <mat-icon class="row-icon">group</mat-icon>
+          <span>{{ [loc.actor1, loc.actor2, loc.actor3].filter(Boolean).join(', ') }}</span>
+        </div> -->
+        <div *ngIf="loc.productionCompany" class="detail-row">
+          <mat-icon class="row-icon">business</mat-icon>
+          <span>{{ loc.productionCompany }}</span>
+        </div>
+        <div *ngIf="loc.funFacts" class="fun-facts-box">
+          <mat-icon>lightbulb</mat-icon>
+          <p>{{ loc.funFacts }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!isLoading() && !selectedLocation()" class="hint">
+      <mat-icon>touch_app</mat-icon>
+      <span>Click any marker on the map to see details</span>
+    </div>
+  </aside>
+
+  <!-- Map -->
+  <main class="map-area">
+    <div #mapContainer class="leaflet-container"></div>
+  </main>
+</div>
