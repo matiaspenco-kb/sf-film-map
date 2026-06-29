@@ -1,13 +1,14 @@
-// ─── Design Tokens ───────────────────────────────────────────────
-$bg-deep:    #0d0d12;
-$bg-panel:   #14141c;
-$bg-card:    #1c1c28;
-$accent:     #e8b86d;       // warm amber — film strip color
-$accent-dim: rgba(232, 184, 109, 0.15);
-$text-pri:   #f0eee8;
-$text-sec:   #8a8898;
-$border:     rgba(255,255,255,0.07);
-$danger:     #e86d6d;
+// ─── Design Tokens (Light Theme) ─────────────────────────────────
+$bg-app:     #f5f3ef;        // warm off-white background
+$bg-panel:   #ffffff;        // sidebar white
+$bg-card:    #f9f7f4;        // card warm white
+$accent:     #2b71c0;        // cinema red
+$accent-dim: rgba(192, 57, 43, 0.08);
+$accent-2:   #2298e6;        // amber for secondary accents
+$text-pri:   #1a1a1a;
+$text-sec:   #6b6b6b;
+$border:     rgba(0, 0, 0, 0.09);
+$shadow:     0 1px 3px rgba(0,0,0,0.08);
 
 // ─── Shell ────────────────────────────────────────────────────────
 .app-shell {
@@ -15,7 +16,7 @@ $danger:     #e86d6d;
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  background: $bg-deep;
+  background: $bg-app;
   font-family: 'Inter', system-ui, sans-serif;
 }
 
@@ -27,17 +28,18 @@ $danger:     #e86d6d;
   border-right: 1px solid $border;
   display: flex;
   flex-direction: column;
-  gap: 0;
   overflow-y: auto;
   z-index: 10;
+  box-shadow: 2px 0 12px rgba(0,0,0,0.06);
 
   &::-webkit-scrollbar { width: 4px; }
-  &::-webkit-scrollbar-thumb { background: $border; border-radius: 4px; }
+  &::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 4px; }
 }
 
 .sidebar-header {
   padding: 20px 20px 16px;
   border-bottom: 1px solid $border;
+  background: linear-gradient(135deg, #fff 60%, #fdf6f0);
 }
 
 .brand {
@@ -56,11 +58,11 @@ $danger:     #e86d6d;
   font-weight: 700;
   color: $accent;
   margin: 0;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
 }
 
 .brand-sub {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: $text-sec;
   margin: 2px 0 0;
   text-transform: uppercase;
@@ -82,7 +84,6 @@ $danger:     #e86d6d;
     .mat-mdc-form-field-flex {
       background: $bg-card;
     }
-    .mat-mdc-outlined-notch,
     .mdc-notched-outline__leading,
     .mdc-notched-outline__notch,
     .mdc-notched-outline__trailing {
@@ -102,13 +103,18 @@ $danger:     #e86d6d;
 
 .search-btn {
   background: $accent !important;
-  color: $bg-deep !important;
+  color: #fff !important;
   font-weight: 600;
   border-radius: 8px !important;
   height: 42px;
   letter-spacing: 0.04em;
+  box-shadow: 0 2px 8px rgba(192, 57, 43, 0.25) !important;
 
   mat-icon { margin-right: 4px; font-size: 18px; }
+
+  &:hover {
+    background: darken(#2b71c0, 6%) !important;
+  }
 }
 
 // ─── Stats ────────────────────────────────────────────────────────
@@ -127,10 +133,11 @@ $danger:     #e86d6d;
   width: 14px;
   vertical-align: middle;
   margin-right: 3px;
+  color: $accent;
 }
 
 .stats-query {
-  strong { color: $accent; font-weight: 500; }
+  strong { color: $accent; font-weight: 600; }
 }
 
 // ─── Loading ──────────────────────────────────────────────────────
@@ -149,11 +156,12 @@ $danger:     #e86d6d;
 
 // ─── Detail Panel ─────────────────────────────────────────────────
 .detail-panel {
-  margin: 0 12px 12px;
+  margin: 4px 12px 12px;
   background: $bg-card;
   border: 1px solid $border;
   border-radius: 12px;
   overflow: hidden;
+  box-shadow: $shadow;
   animation: slideIn 0.2s ease;
 }
 
@@ -167,6 +175,8 @@ $danger:     #e86d6d;
   align-items: flex-start;
   justify-content: space-between;
   padding: 14px 14px 4px;
+  background: linear-gradient(135deg, #fff8f6 0%, #fff 100%);
+  border-bottom: 1px solid $border;
 }
 
 .detail-title {
@@ -187,20 +197,8 @@ $danger:     #e86d6d;
   ::ng-deep .mat-icon { font-size: 16px; }
 }
 
-.detail-year {
-  display: inline-block;
-  margin: 0 14px 10px;
-  background: $accent-dim;
-  color: $accent;
-  border-radius: 20px;
-  padding: 1px 10px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-}
-
 .detail-body {
-  padding: 0 14px 14px;
+  padding: 10px 14px 14px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -210,8 +208,8 @@ $danger:     #e86d6d;
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  color: $text-sec;
   font-size: 0.82rem;
+  color: $text-sec;
 
   span { color: $text-pri; line-height: 1.4; }
 }
@@ -229,16 +227,16 @@ $danger:     #e86d6d;
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  background: $accent-dim;
-  border-left: 2px solid $accent;
+  background: #fffbf0;
+  border-left: 3px solid $accent-2;
   border-radius: 0 6px 6px 0;
   padding: 8px 10px;
   font-size: 0.78rem;
-  color: $text-sec;
+  color: #7a5c1e;
   margin-top: 4px;
 
   mat-icon {
-    color: $accent;
+    color: $accent-2;
     font-size: 14px;
     width: 14px;
     height: 14px;
@@ -247,6 +245,33 @@ $danger:     #e86d6d;
   }
 
   p { margin: 0; font-style: italic; line-height: 1.45; }
+}
+
+// ─── Tags ─────────────────────────────────────────────────────────
+.detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 14px 4px;
+}
+
+.tag {
+  display: inline-block;
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-size: 0.73rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.tag-year {
+  background: $accent-dim;
+  color: $accent;
+}
+
+.tag-neighborhood {
+  background: rgba(52, 100, 200, 0.08);
+  color: #3464c8;
 }
 
 // ─── Hint ─────────────────────────────────────────────────────────
@@ -258,7 +283,7 @@ $danger:     #e86d6d;
   color: $text-sec;
   font-size: 0.78rem;
 
-  mat-icon { font-size: 16px; height: 16px; width: 16px; }
+  mat-icon { font-size: 16px; height: 16px; width: 16px; color: $accent; }
 }
 
 // ─── Map ──────────────────────────────────────────────────────────
@@ -283,8 +308,8 @@ $danger:     #e86d6d;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-    border: 2px solid rgba(255,255,255,0.2);
+    box-shadow: 0 2px 10px rgba(43, 78, 192, 0.4);
+    border: 2px solid rgba(255,255,255,0.6);
     transition: transform 0.15s ease;
 
     &:hover { transform: rotate(-45deg) scale(1.15); }
@@ -297,15 +322,15 @@ $danger:     #e86d6d;
   }
 
   .leaflet-popup-content-wrapper {
-    background: $bg-card;
+    background: #fff;
     border: 1px solid $border;
     border-radius: 10px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.6);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
     color: $text-pri;
   }
 
   .leaflet-popup-tip {
-    background: $bg-card;
+    background: #fff;
   }
 
   .leaflet-popup-close-button {
@@ -314,36 +339,50 @@ $danger:     #e86d6d;
 
   .popup-content {
     h3 {
-      margin: 0 0 4px;
+      margin: 0 0 6px;
       font-size: 0.95rem;
       font-weight: 700;
       color: $text-pri;
     }
-    .year {
-      display: inline-block;
+    .popup-tags {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    .popup-year {
       background: $accent-dim;
       color: $accent;
       border-radius: 20px;
       padding: 1px 8px;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 600;
-      margin-bottom: 8px;
     }
-    p { margin: 4px 0; font-size: 0.8rem; color: $text-sec; }
-    .location-label strong { color: $accent; }
+    .popup-neighborhood {
+      background: rgba(52,100,200,0.08);
+      color: #3464c8;
+      border-radius: 20px;
+      padding: 1px 8px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+    p { margin: 3px 0; font-size: 0.8rem; color: $text-sec; }
+    strong { color: $text-pri; }
     .fun-facts {
       font-style: italic;
       border-top: 1px solid $border;
       padding-top: 6px;
       margin-top: 6px;
+      color: #7a5c1e;
     }
   }
 
-  // Autocomplete panel dark theme
+  // Autocomplete panel light theme
   .mat-mdc-autocomplete-panel {
-    background: $bg-card !important;
+    background: #fff !important;
     border: 1px solid $border;
     border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
 
     .mat-mdc-option {
       color: $text-pri;
@@ -355,31 +394,4 @@ $danger:     #e86d6d;
       }
     }
   }
-}
-
-// ─── Tags ─────────────────────────────────────────────────────────
-.detail-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  padding: 0 14px 10px;
-}
-
-.tag {
-  display: inline-block;
-  border-radius: 20px;
-  padding: 2px 10px;
-  font-size: 0.73rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-}
-
-.tag-year {
-  background: $accent-dim;
-  color: $accent;
-}
-
-.tag-neighborhood {
-  background: rgba(100, 140, 255, 0.12);
-  color: #8aacff;
 }
