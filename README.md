@@ -74,8 +74,8 @@ npm start
 
 ## 🗺️ Features
 
-- **Interactive dark map** using Leaflet + CartoDB Dark Matter tiles
-- **Custom film-strip markers** (amber pin with 🎬)
+- **Interactive map** using Leaflet + CartoDB Voyager light tiles
+- **Custom film-strip markers** (pin with 🎬)
 - **Autocomplete search** with debounced API calls — search by:
   - Movie title
   - Director
@@ -108,5 +108,5 @@ Frontend API URL: update `baseUrl` in `src/app/services/film-location-api.servic
 |-------|-----------|
 | Backend | C# / ASP.NET Core 8 / CsvHelper |
 | Frontend | Angular 17 (standalone) / Angular Material / Leaflet |
-| Map tiles | CartoDB Dark Matter (free, no API key needed) |
+| Map tiles | CartoDB Voyager light (free, no API key needed) |
 | Geocoding | Built-in SF landmark dictionary (upgradeable) |
